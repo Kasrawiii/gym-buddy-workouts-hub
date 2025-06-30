@@ -1,8 +1,8 @@
 
 import { useState, useEffect } from "react";
-import { Lightbulb, RefreshCw, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Brain, Sparkles, TrendingUp, Target } from "lucide-react";
 import { Exercise } from "@/types/exercise";
 
 interface SmartSuggestionsProps {
@@ -11,65 +11,90 @@ interface SmartSuggestionsProps {
 }
 
 const SmartSuggestions = ({ exercises, onAddSuggestion }: SmartSuggestionsProps) => {
-  const [suggestions, setSuggestions] = useState<Array<Omit<Exercise, 'id'>>>([]);
+  const [suggestions, setSuggestions] = useState<Omit<Exercise, 'id'>[]>([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const exerciseDatabase = {
-    "صدر": [
-      { name: "ضغط بنش مسطح", sets: 4, reps: 10, weight: 60, notes: "ركز على النزول البطيء" },
-      { name: "ضغط دمبل مائل", sets: 3, reps: 12, weight: 25, notes: "زاوية 45 درجة" },
-      { name: "تفتيح صدر", sets: 3, reps: 15, weight: 15, notes: "حركة واسعة ومسيطر عليها" },
-    ],
-    "ظهر": [
-      { name: "سحب بار واسع", sets: 4, reps: 8, weight: 50, notes: "اسحب للصدر العلوي" },
-      { name: "تجديف دمبل", sets: 3, reps: 10, weight: 30, notes: "حافظ على استقامة الظهر" },
-      { name: "سحب كابل ضيق", sets: 3, reps: 12, weight: 40, notes: "اضغط لوحي الكتف" },
-    ],
-    "كتف": [
-      { name: "ضغط عسكري", sets: 4, reps: 8, weight: 40, notes: "من أمام الرأس" },
-      { name: "رفع جانبي", sets: 3, reps: 15, weight: 12, notes: "حتى مستوى الكتف" },
-      { name: "رفع أمامي", sets: 3, reps: 12, weight: 15, notes: "بالتناوب" },
-    ],
-    "ذراع": [
-      { name: "بايسبس بار", sets: 3, reps: 10, weight: 30, notes: "حركة بطيئة ومسيطر عليها" },
-      { name: "ترايسبس كابل", sets: 3, reps: 12, weight: 25, notes: "اثبت المرفقين" },
-      { name: "هامر كيرل", sets: 3, reps: 10, weight: 20, notes: "بالدمبل" },
-    ],
-    "رجل": [
-      { name: "سكوات", sets: 4, reps: 12, weight: 80, notes: "انزل حتى 90 درجة" },
-      { name: "ديد ليفت", sets: 3, reps: 8, weight: 100, notes: "حافظ على استقامة الظهر" },
-      { name: "لانج", sets: 3, reps: 10, weight: 40, notes: "بالتناوب" },
-    ],
-    "بطن": [
-      { name: "كرانش", sets: 3, reps: 20, weight: 0, notes: "ركز على العضلة" },
-      { name: "بلانك", sets: 3, reps: 1, weight: 0, notes: "احتفظ لمدة 60 ثانية" },
-      { name: "رفع الأرجل", sets: 3, reps: 15, weight: 0, notes: "حركة بطيئة" },
-    ],
-  };
-
-  const generateSmartSuggestions = () => {
-    const recentCategories = exercises.slice(-5).map(ex => ex.category);
-    const categoryCount = recentCategories.reduce((acc, cat) => {
-      acc[cat] = (acc[cat] || 0) + 1;
-      return acc;
-    }, {} as Record<string, number>);
-
-    // اقترح تمارين من فئات لم يتم التمرن عليها مؤخراً
-    const lessTrainedCategories = Object.keys(exerciseDatabase)
-      .filter(cat => !categoryCount[cat] || categoryCount[cat] < 2)
-      .slice(0, 3);
-
-    const newSuggestions = lessTrainedCategories.map(category => {
-      const categoryExercises = exerciseDatabase[category as keyof typeof exerciseDatabase];
-      const randomExercise = categoryExercises[Math.floor(Math.random() * categoryExercises.length)];
-      
-      return {
-        ...randomExercise,
-        category: category as any,
+  const generateSmartSuggestions = async () => {
+    setIsLoading(true);
+    
+    // محاكاة تحليل ذكي للتمارين
+    await new Promise(resolve => setTimeout(resolve, 1500));
+    
+    const categories = exercises.map(ex => ex.category);
+    const uniqueCategories = [...new Set(categories)];
+    
+    // اقتراحات ذكية بناءً على التمارين الحالية
+    const smartSuggestions = [
+      {
+        category: "صدر",
         createdAt: new Date(),
-      };
-    });
+        workoutDate: new Date(),
+        name: "ضغط صدر بالدمبل",
+        sets: 4,
+        reps: 12,
+        weight: 25,
+        notes: "اقتراح ذكي: يكمل تمارين الصدر الموجودة"
+      },
+      {
+        category: "ظهر",
+        createdAt: new Date(),
+        workoutDate: new Date(),
+        name: "سحب عالي بالكيبل",
+        sets: 3,
+        reps: 15,
+        weight: 40,
+        notes: "اقتراح ذكي: لتقوية عضلات الظهر العلوية"
+      },
+      {
+        category: "رجل",
+        createdAt: new Date(),
+        workoutDate: new Date(),
+        name: "سكوات بالبار",
+        sets: 4,
+        reps: 10,
+        weight: 60,
+        notes: "اقتراح ذكي: تمرين أساسي للرجل"
+      },
+      {
+        category: "كتف",
+        createdAt: new Date(),
+        workoutDate: new Date(),
+        name: "رفع جانبي بالدمبل",
+        sets: 3,
+        reps: 12,
+        weight: 12,
+        notes: "اقتراح ذكي: لتكوير الكتف"
+      },
+      {
+        category: "ذراع",
+        createdAt: new Date(),
+        workoutDate: new Date(),
+        name: "بايسبس بالبار",
+        sets: 3,
+        reps: 10,
+        weight: 20,
+        notes: "اقتراح ذكي: لتضخيم البايسبس"
+      },
+      {
+        category: "بطن",
+        createdAt: new Date(),
+        workoutDate: new Date(),
+        name: "بلانك",
+        sets: 3,
+        reps: 30,
+        weight: 0,
+        notes: "اقتراح ذكي: لتقوية عضلات البطن"
+      }
+    ];
 
-    setSuggestions(newSuggestions);
+    // فلترة الاقتراحات بناءً على ما هو مفقود
+    const missingSuggestions = smartSuggestions.filter(suggestion => 
+      !uniqueCategories.includes(suggestion.category) || 
+      exercises.filter(ex => ex.category === suggestion.category).length < 2
+    ).slice(0, 3);
+
+    setSuggestions(missingSuggestions);
+    setIsLoading(false);
   };
 
   useEffect(() => {
@@ -77,57 +102,69 @@ const SmartSuggestions = ({ exercises, onAddSuggestion }: SmartSuggestionsProps)
   }, [exercises]);
 
   return (
-    <Card className="bg-white/10 backdrop-blur-sm border-white/20">
+    <Card className="bg-white/10 backdrop-blur-sm border-green-500/20">
       <CardHeader>
-        <CardTitle className="flex items-center gap-2 text-white">
-          <Lightbulb className="w-5 h-5 text-yellow-400" />
+        <CardTitle className="text-white flex items-center gap-2">
+          <Brain className="w-6 h-6 text-green-400" />
           اقتراحات ذكية
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={generateSmartSuggestions}
-            className="ml-auto text-blue-300 hover:text-white"
-          >
-            <RefreshCw className="w-4 h-4" />
-          </Button>
         </CardTitle>
+        <CardDescription className="text-blue-200">
+          اقتراحات مخصصة بناءً على تمارينك الحالية
+        </CardDescription>
       </CardHeader>
-      <CardContent className="p-4">
-        {suggestions.length === 0 ? (
-          <p className="text-blue-200 text-center py-4">
-            أضف المزيد من التمارين للحصول على اقتراحات ذكية
-          </p>
-        ) : (
+      <CardContent className="space-y-4">
+        <Button 
+          onClick={generateSmartSuggestions}
+          disabled={isLoading}
+          className="w-full bg-green-600 hover:bg-green-700 text-white"
+        >
+          {isLoading ? (
+            <div className="flex items-center gap-2">
+              <div className="animate-spin rounded-full h-4 w-4 border-2 border-white border-t-transparent" />
+              جاري التحليل...
+            </div>
+          ) : (
+            <>
+              <Sparkles className="w-4 h-4" />
+              إنشاء اقتراحات جديدة
+            </>
+          )}
+        </Button>
+
+        {suggestions.length > 0 && (
           <div className="space-y-3">
+            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <TrendingUp className="w-5 h-5 text-green-400" />
+              اقتراحات مخصصة لك
+            </h3>
+            
             {suggestions.map((suggestion, index) => (
-              <div
-                key={index}
-                className="bg-white/10 rounded-lg p-3 border border-white/20"
-              >
-                <div className="flex items-start justify-between">
-                  <div className="flex-1">
-                    <h4 className="text-white font-semibold">{suggestion.name}</h4>
-                    <p className="text-blue-200 text-sm">{suggestion.category}</p>
-                    <div className="flex gap-4 mt-2 text-xs text-blue-300">
-                      <span>{suggestion.sets} مجموعات</span>
-                      <span>{suggestion.reps} تكرار</span>
-                      <span>{suggestion.weight} كيلو</span>
+              <Card key={index} className="bg-white/5 border-green-400/20">
+                <CardContent className="p-4">
+                  <div className="flex justify-between items-start mb-2">
+                    <div>
+                      <h4 className="font-semibold text-white">{suggestion.name}</h4>
+                      <p className="text-sm text-blue-200">{suggestion.category}</p>
                     </div>
-                    {suggestion.notes && (
-                      <p className="text-xs text-blue-300 mt-1 italic">
-                        {suggestion.notes}
-                      </p>
-                    )}
+                    <Button
+                      size="sm"
+                      onClick={() => onAddSuggestion(suggestion)}
+                      className="bg-green-600 hover:bg-green-700 text-white"
+                    >
+                      <Target className="w-4 h-4" />
+                      إضافة
+                    </Button>
                   </div>
-                  <Button
-                    size="sm"
-                    onClick={() => onAddSuggestion(suggestion)}
-                    className="bg-gradient-to-r from-green-500 to-emerald-500 hover:from-green-600 hover:to-emerald-600 text-white"
-                  >
-                    <TrendingUp className="w-4 h-4" />
-                  </Button>
-                </div>
-              </div>
+                  
+                  <div className="flex gap-4 text-sm text-blue-200 mb-2">
+                    <span>{suggestion.sets} مجموعات</span>
+                    <span>{suggestion.reps} تكرار</span>
+                    {suggestion.weight > 0 && <span>{suggestion.weight} كيلو</span>}
+                  </div>
+                  
+                  <p className="text-xs text-green-300">{suggestion.notes}</p>
+                </CardContent>
+              </Card>
             ))}
           </div>
         )}

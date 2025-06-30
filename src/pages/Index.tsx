@@ -1,6 +1,9 @@
+
 import { useState } from "react";
-import { Dumbbell, Bot, CalendarIcon } from "lucide-react";
+import { Dumbbell, Bot, CalendarIcon, Utensils } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import WorkoutForm from "@/components/WorkoutForm";
 import ExerciseList from "@/components/ExerciseList";
 import AIAssistant from "@/components/AIAssistant";
@@ -9,6 +12,7 @@ import WorkoutCalendar from "@/components/WorkoutCalendar";
 import { Exercise } from "@/types/exercise";
 
 const Index = () => {
+  const navigate = useNavigate();
   const [exercises, setExercises] = useState<Exercise[]>([]);
 
   const addExercise = (exercise: Omit<Exercise, 'id'>) => {
@@ -27,7 +31,7 @@ const Index = () => {
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800">
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
-        <div className="text-center mb-12 animate-fade-in">
+        <div className="text-center mb-8 animate-fade-in">
           <div className="flex justify-center items-center gap-3 mb-4">
             <Dumbbell className="w-12 h-12 text-orange-500" />
             <h1 className="text-5xl font-bold text-white">
@@ -35,9 +39,18 @@ const Index = () => {
             </h1>
             <Bot className="w-12 h-12 text-purple-400" />
           </div>
-          <p className="text-xl text-blue-200 max-w-2xl mx-auto">
+          <p className="text-xl text-blue-200 max-w-2xl mx-auto mb-6">
             احفظ تمارينك وتابع تقدمك مع المساعد الذكي المجاني
           </p>
+          
+          {/* زر الانتقال لصفحة الوجبات */}
+          <Button 
+            onClick={() => navigate('/meals')}
+            className="bg-emerald-600 hover:bg-emerald-700 text-white text-lg px-8 py-3 rounded-full"
+          >
+            <Utensils className="w-6 h-6 mr-2" />
+            مخطط الوجبات الذكي
+          </Button>
         </div>
 
         <Tabs defaultValue="workout" className="max-w-7xl mx-auto">
