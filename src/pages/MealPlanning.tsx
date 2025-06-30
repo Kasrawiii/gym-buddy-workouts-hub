@@ -1,7 +1,8 @@
-
 import { useState } from "react";
-import { Utensils, Calculator, Bot, ChefHat } from "lucide-react";
+import { Utensils, Calculator, Bot, ChefHat, ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Button } from "@/components/ui/button";
+import { useNavigate } from "react-router-dom";
 import MealForm from "@/components/MealForm";
 import MealList from "@/components/MealList";
 import NutritionTracker from "@/components/NutritionTracker";
@@ -10,6 +11,7 @@ import NutritionGoalsForm from "@/components/NutritionGoalsForm";
 import { Meal, NutritionGoals } from "@/types/meal";
 
 const MealPlanning = () => {
+  const navigate = useNavigate();
   const [meals, setMeals] = useState<Meal[]>([]);
   const [nutritionGoals, setNutritionGoals] = useState<NutritionGoals | null>(null);
 
@@ -47,6 +49,18 @@ const MealPlanning = () => {
       <div className="container mx-auto px-4 py-8">
         {/* Header */}
         <div className="text-center mb-12 animate-fade-in">
+          {/* زر العودة */}
+          <div className="flex justify-start mb-6">
+            <Button 
+              onClick={() => navigate('/')}
+              variant="outline"
+              className="bg-white/10 border-white/20 text-white hover:bg-white/20 backdrop-blur-sm"
+            >
+              <ArrowLeft className="w-4 h-4 mr-2" />
+              العودة للقائمة الرئيسية
+            </Button>
+          </div>
+          
           <div className="flex justify-center items-center gap-3 mb-4">
             <Utensils className="w-12 h-12 text-green-400" />
             <h1 className="text-5xl font-bold text-white">
