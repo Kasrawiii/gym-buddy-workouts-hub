@@ -1,11 +1,11 @@
-
 import { useState } from "react";
-import { Dumbbell, Bot } from "lucide-react";
+import { Dumbbell, Bot, CalendarIcon } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import WorkoutForm from "@/components/WorkoutForm";
 import ExerciseList from "@/components/ExerciseList";
 import AIAssistant from "@/components/AIAssistant";
 import SmartSuggestions from "@/components/SmartSuggestions";
+import WorkoutCalendar from "@/components/WorkoutCalendar";
 import { Exercise } from "@/types/exercise";
 
 const Index = () => {
@@ -41,9 +41,12 @@ const Index = () => {
         </div>
 
         <Tabs defaultValue="workout" className="max-w-7xl mx-auto">
-          <TabsList className="grid w-full grid-cols-3 mb-8 bg-white/10 backdrop-blur-sm">
+          <TabsList className="grid w-full grid-cols-4 mb-8 bg-white/10 backdrop-blur-sm">
             <TabsTrigger value="workout" className="text-white data-[state=active]:bg-orange-500">
               إدارة التمارين
+            </TabsTrigger>
+            <TabsTrigger value="calendar" className="text-white data-[state=active]:bg-blue-500">
+              التقويم
             </TabsTrigger>
             <TabsTrigger value="ai" className="text-white data-[state=active]:bg-purple-500">
               المساعد الذكي
@@ -86,6 +89,12 @@ const Index = () => {
                   </div>
                 </div>
               </div>
+            </div>
+          </TabsContent>
+
+          <TabsContent value="calendar">
+            <div className="max-w-7xl mx-auto">
+              <WorkoutCalendar exercises={exercises} />
             </div>
           </TabsContent>
 

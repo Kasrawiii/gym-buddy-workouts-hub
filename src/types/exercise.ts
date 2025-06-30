@@ -8,6 +8,7 @@ export interface Exercise {
   category: string;
   notes?: string;
   createdAt: Date;
+  workoutDate: Date;
 }
 
 export type ExerciseCategory = 

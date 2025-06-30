@@ -1,13 +1,18 @@
 
 import { useState } from "react";
-import { Plus, Dumbbell } from "lucide-react";
+import { Plus, Dumbbell, CalendarIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Calendar } from "@/components/ui/calendar";
+import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover";
 import { Exercise, ExerciseCategory } from "@/types/exercise";
+import { format } from "date-fns";
+import { ar } from "date-fns/locale";
+import { cn } from "@/lib/utils";
 
 interface WorkoutFormProps {
   onAddExercise: (exercise: Omit<Exercise, 'id'>) => void;
@@ -23,6 +28,7 @@ const WorkoutForm = ({ onAddExercise }: WorkoutFormProps) => {
     weight: 0,
     category: "" as ExerciseCategory,
     notes: "",
+    workoutDate: new Date(),
   });
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -42,6 +48,7 @@ const WorkoutForm = ({ onAddExercise }: WorkoutFormProps) => {
       weight: 0,
       category: "" as ExerciseCategory,
       notes: "",
+      workoutDate: new Date(),
     });
   };
 
@@ -65,6 +72,39 @@ const WorkoutForm = ({ onAddExercise }: WorkoutFormProps) => {
               className="bg-white/20 border-white/30 text-white placeholder:text-blue-300"
               required
             />
+          </div>
+
+          {/* اختيار تاريخ التمرين */}
+          <div className="space-y-2">
+            <Label className="text-blue-200">تاريخ التمرين</Label>
+            <Popover>
+              <PopoverTrigger asChild>
+                <Button
+                  variant="outline"
+                  className={cn(
+                    "w-full justify-start text-left font-normal bg-white/20 border-white/30 text-white hover:bg-white/30",
+                    !formData.workoutDate && "text-blue-300"
+                  )}
+                >
+                  <CalendarIcon className="mr-2 h-4 w-4" />
+                  {formData.workoutDate ? (
+                    format(formData.workoutDate, "PPP", { locale: ar })
+                  ) : (
+                    <span>اختر التاريخ</span>
+                  )}
+                </Button>
+              </PopoverTrigger>
+              <PopoverContent className="w-auto p-0 bg-slate-800 border-white/20" align="start">
+                <Calendar
+                  mode="single"
+                  selected={formData.workoutDate}
+                  onSelect={(date) => date && setFormData(prev => ({ ...prev, workoutDate: date }))}
+                  initialFocus
+                  locale={ar}
+                  className="bg-slate-800 text-white pointer-events-auto"
+                />
+              </PopoverContent>
+            </Popover>
           </div>
 
           <div className="space-y-2">
