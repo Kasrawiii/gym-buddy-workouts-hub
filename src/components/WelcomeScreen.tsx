@@ -3,12 +3,15 @@ import { useState, useEffect } from "react";
 import { Dumbbell, Bot, Sparkles, Shield, AlertCircle, Clock } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useLanguage } from "@/contexts/LanguageContext";
+import LanguageSelector from "./LanguageSelector";
 
 interface WelcomeScreenProps {
   onStart: () => void;
 }
 
 const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
+  const { t, language } = useLanguage();
   const [isVisible, setIsVisible] = useState(false);
   const [showSecretForm, setShowSecretForm] = useState(false);
   const [secretCode, setSecretCode] = useState("");
@@ -60,9 +63,9 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
       if (newAttempts === 0) {
         setIsBlocked(true);
         setBlockTimer(60);
-        setError("تم استنفاد المحاولات. يتم حظرك لمدة دقيقة واحدة.");
+        setError(t('attemptsExhausted'));
       } else {
-        setError(`رمز خاطئ! متبقي ${newAttempts} محاولة${newAttempts > 1 ? '' : ''}`);
+        setError(`${t('wrongCode')} ${newAttempts} ${t('attempts')}${newAttempts > 1 ? '' : ''}`);
       }
       
       setSecretCode("");
@@ -86,7 +89,12 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
   if (!showSecretForm) {
     return (
       <div className={`min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-        <div className="text-center px-4 max-w-4xl mx-auto">
+        {/* Language Selector */}
+        <div className="absolute top-4 right-4">
+          <LanguageSelector />
+        </div>
+
+        <div className={`text-center px-4 max-w-4xl mx-auto ${language === 'ar' ? 'direction-rtl' : 'direction-ltr'}`}>
           {/* الأيقونات المتحركة */}
           <div className="flex justify-center items-center gap-6 mb-8 animate-fade-in">
             <Dumbbell className="w-16 h-16 text-orange-500 animate-pulse" />
@@ -96,17 +104,16 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
 
           {/* العنوان الرئيسي */}
           <h1 className="text-6xl md:text-7xl font-bold text-white mb-6 animate-fade-in">
-            مدرب الجيم الذكي
+            {t('gymTrainer')}
           </h1>
 
           {/* الجملة التحفيزية */}
           <div className="mb-12 animate-fade-in">
             <p className="text-2xl md:text-3xl text-blue-200 mb-4 font-semibold">
-              🔥 رحلتك نحو القوة تبدأ اليوم 🔥
+              {t('journeyStarts')}
             </p>
             <p className="text-xl text-blue-300 max-w-2xl mx-auto leading-relaxed">
-              مع المساعد الذكي المجاني، ستتمكن من تتبع تمارينك، تنظيم وجباتك، 
-              والوصول لأهدافك بطريقة علمية ومدروسة
+              {t('smartAssistant')}
             </p>
           </div>
 
@@ -114,18 +121,18 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12 animate-fade-in">
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300">
               <div className="text-3xl font-bold text-green-400 mb-2">💪</div>
-              <div className="text-white font-semibold">تتبع التمارين</div>
-              <div className="text-blue-200 text-sm">بذكاء وسهولة</div>
+              <div className="text-white font-semibold">{t('trackExercises')}</div>
+              <div className="text-blue-200 text-sm">{t('smartEasy')}</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300">
               <div className="text-3xl font-bold text-orange-400 mb-2">🥗</div>
-              <div className="text-white font-semibold">تنظيم الوجبات</div>
-              <div className="text-blue-200 text-sm">حسب أهدافك</div>
+              <div className="text-white font-semibold">{t('mealPlanning')}</div>
+              <div className="text-blue-200 text-sm">{t('basedOnGoals')}</div>
             </div>
             <div className="bg-white/10 backdrop-blur-sm rounded-2xl p-6 transform hover:scale-105 transition-all duration-300">
               <div className="text-3xl font-bold text-purple-400 mb-2">🤖</div>
-              <div className="text-white font-semibold">مساعد ذكي</div>
-              <div className="text-blue-200 text-sm">مجاني 100%</div>
+              <div className="text-white font-semibold">{t('smartAssistantFree')}</div>
+              <div className="text-blue-200 text-sm">{t('free100')}</div>
             </div>
           </div>
 
@@ -137,11 +144,11 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               className="bg-gradient-to-r from-orange-500 to-red-500 hover:from-orange-600 hover:to-red-600 text-white text-2xl px-12 py-6 rounded-full shadow-2xl transform hover:scale-110 transition-all duration-300 font-bold"
             >
               <Sparkles className="w-6 h-6 mr-3" />
-              هيّا نبدأ
+              {t('letsStart')}
               <Sparkles className="w-6 h-6 ml-3" />
             </Button>
             <p className="text-blue-300 mt-4 text-sm">
-              ابدأ رحلتك نحو أفضل نسخة من نفسك
+              {t('startJourney')}
             </p>
           </div>
         </div>
@@ -151,7 +158,12 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
 
   return (
     <div className={`min-h-screen bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 flex items-center justify-center transition-all duration-500 ${isVisible ? 'opacity-100' : 'opacity-0'}`}>
-      <div className="text-center px-4 max-w-md mx-auto">
+      {/* Language Selector */}
+      <div className="absolute top-4 right-4">
+        <LanguageSelector />
+      </div>
+
+      <div className={`text-center px-4 max-w-md mx-auto ${language === 'ar' ? 'direction-rtl' : 'direction-ltr'}`}>
         <div className={`bg-white/10 backdrop-blur-sm rounded-3xl p-8 shadow-2xl transform transition-all duration-500 ${isShaking ? 'animate-pulse scale-105' : 'scale-100'}`}>
           {/* أيقونة الحماية */}
           <div className="flex justify-center mb-6">
@@ -161,10 +173,10 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
           </div>
 
           <h2 className="text-3xl font-bold text-white mb-2">
-            الرمز السري
+            {t('secretCode')}
           </h2>
           <p className="text-blue-200 mb-8">
-            أدخل الرمز السري للوصول للتطبيق
+            {t('enterSecret')}
           </p>
 
           {/* حقل إدخال الرمز */}
@@ -174,7 +186,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
               value={secretCode}
               onChange={(e) => setSecretCode(e.target.value.slice(0, 4))}
               onKeyPress={handleKeyPress}
-              placeholder="أدخل الرمز (4 أرقام)"
+              placeholder={t('enterCode')}
               className="text-center text-2xl font-bold bg-white/20 border-white/30 text-white placeholder:text-white/60 focus:border-orange-400 focus:ring-orange-400/50 transition-all duration-300"
               maxLength={4}
               disabled={isBlocked}
@@ -188,7 +200,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             }`}>
               {isBlocked ? <Clock className="w-5 h-5" /> : <AlertCircle className="w-5 h-5" />}
               <span className="text-sm">
-                {isBlocked ? `محظور لمدة: ${formatTime(blockTimer)}` : error}
+                {isBlocked ? `${t('blockedFor')}: ${formatTime(blockTimer)}` : error}
               </span>
             </div>
           )}
@@ -207,7 +219,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
                 ))}
               </div>
               <p className="text-blue-300 text-sm mt-2">
-                المحاولات المتبقية: {attempts}
+                {t('attemptsLeft')}: {attempts}
               </p>
             </div>
           )}
@@ -221,12 +233,12 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             {isBlocked ? (
               <>
                 <Clock className="w-5 h-5 mr-2" />
-                محظور ({formatTime(blockTimer)})
+                {t('blocked')} ({formatTime(blockTimer)})
               </>
             ) : (
               <>
                 <Shield className="w-5 h-5 mr-2" />
-                تأكيد الدخول
+                {t('confirmEntry')}
               </>
             )}
           </Button>
@@ -238,7 +250,7 @@ const WelcomeScreen = ({ onStart }: WelcomeScreenProps) => {
             className="w-full mt-4 text-blue-200 hover:text-white hover:bg-white/10 transition-all duration-300"
             disabled={isBlocked}
           >
-            العودة للخلف
+            {t('goBack')}
           </Button>
         </div>
       </div>
