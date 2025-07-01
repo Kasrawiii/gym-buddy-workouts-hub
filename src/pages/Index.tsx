@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
 import WorkoutForm from "@/components/WorkoutForm";
 import ExerciseList from "@/components/ExerciseList";
-import AIAssistant from "@/components/AIAssistant";
+import EnhancedAIAssistant from "@/components/EnhancedAIAssistant";
 import SmartSuggestions from "@/components/SmartSuggestions";
 import WorkoutCalendar from "@/components/WorkoutCalendar";
 import { Exercise } from "@/types/exercise";
@@ -113,7 +113,10 @@ const Index = () => {
 
           <TabsContent value="ai">
             <div className="max-w-4xl mx-auto">
-              <AIAssistant />
+              <EnhancedAIAssistant 
+                exercises={exercises}
+                onAddExercise={addExercise}
+              />
             </div>
           </TabsContent>
 

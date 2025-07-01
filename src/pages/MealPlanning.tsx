@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { Utensils, Calculator, Bot, ChefHat, ArrowLeft } from "lucide-react";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -6,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import MealForm from "@/components/MealForm";
 import MealList from "@/components/MealList";
 import NutritionTracker from "@/components/NutritionTracker";
-import MealAIAssistant from "@/components/MealAIAssistant";
+import EnhancedAIAssistant from "@/components/EnhancedAIAssistant";
 import NutritionGoalsForm from "@/components/NutritionGoalsForm";
 import { Meal, NutritionGoals } from "@/types/meal";
 
@@ -151,10 +152,9 @@ const MealPlanning = () => {
 
           <TabsContent value="ai">
             <div className="max-w-4xl mx-auto">
-              <MealAIAssistant 
+              <EnhancedAIAssistant 
                 meals={meals}
-                nutritionGoals={nutritionGoals}
-                onAddMealSuggestion={addMeal}
+                onAddMeal={addMeal}
               />
             </div>
           </TabsContent>
