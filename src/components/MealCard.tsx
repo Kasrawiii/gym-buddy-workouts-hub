@@ -4,7 +4,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Calendar, Trash2, Flame, Award } from "lucide-react";
 import { format } from "date-fns";
-import { ar } from "date-fns/locale";
+import { ar, es } from "date-fns/locale";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Meal } from "@/types/meal";
 
 interface MealCardProps {
@@ -13,6 +14,8 @@ interface MealCardProps {
 }
 
 const MealCard = ({ meal, onDelete }: MealCardProps) => {
+  const { t, language } = useLanguage();
+  
   const getCategoryColor = (category: string) => {
     const colors = {
       "إفطار": "bg-yellow-500/20 text-yellow-300 border-yellow-400/30",
@@ -20,6 +23,11 @@ const MealCard = ({ meal, onDelete }: MealCardProps) => {
       "عشاء": "bg-blue-500/20 text-blue-300 border-blue-400/30",
       "وجبة خفيفة": "bg-green-500/20 text-green-300 border-green-400/30",
       "مكملات": "bg-purple-500/20 text-purple-300 border-purple-400/30",
+      "desayuno": "bg-yellow-500/20 text-yellow-300 border-yellow-400/30",
+      "almuerzo": "bg-orange-500/20 text-orange-300 border-orange-400/30",
+      "cena": "bg-blue-500/20 text-blue-300 border-blue-400/30",
+      "merienda": "bg-green-500/20 text-green-300 border-green-400/30",
+      "suplementos": "bg-purple-500/20 text-purple-300 border-purple-400/30",
     };
     return colors[category as keyof typeof colors] || "bg-gray-500/20 text-gray-300";
   };
@@ -38,12 +46,12 @@ const MealCard = ({ meal, onDelete }: MealCardProps) => {
             
             <div className="flex items-center gap-2 text-sm text-green-200 mb-2">
               <Calendar className="w-4 h-4" />
-              {format(new Date(meal.mealDate), "dd MMM yyyy", { locale: ar })}
+              {format(new Date(meal.mealDate), "dd MMM yyyy", { locale: language === 'ar' ? ar : es })}
             </div>
 
             {meal.servingSize && (
               <p className="text-sm text-green-300 mb-2">
-                حجم الحصة: {meal.servingSize}
+                {t('servingSize')} {meal.servingSize}
               </p>
             )}
             
@@ -69,7 +77,7 @@ const MealCard = ({ meal, onDelete }: MealCardProps) => {
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Flame className="w-4 h-4 text-orange-400" />
-              <span className="text-sm text-green-200">سعرات</span>
+              <span className="text-sm text-green-200">{t('calories_short')}</span>
             </div>
             <div className="text-lg font-bold text-orange-400">{meal.calories}</div>
           </div>
@@ -77,21 +85,21 @@ const MealCard = ({ meal, onDelete }: MealCardProps) => {
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
               <Award className="w-4 h-4 text-blue-400" />
-              <span className="text-sm text-green-200">بروتين</span>
+              <span className="text-sm text-green-200">{t('protein_short')}</span>
             </div>
             <div className="text-lg font-bold text-blue-400">{meal.protein.toFixed(1)}ج</div>
           </div>
           
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <span className="text-sm text-green-200">كارب</span>
+              <span className="text-sm text-green-200">{t('carbs_short')}</span>
             </div>
             <div className="text-lg font-bold text-yellow-400">{meal.carbs.toFixed(1)}ج</div>
           </div>
           
           <div className="text-center">
             <div className="flex items-center justify-center gap-1 mb-1">
-              <span className="text-sm text-green-200">دهون</span>
+              <span className="text-sm text-green-200">{t('fat_short')}</span>
             </div>
             <div className="text-lg font-bold text-red-400">{meal.fat.toFixed(1)}ج</div>
           </div>

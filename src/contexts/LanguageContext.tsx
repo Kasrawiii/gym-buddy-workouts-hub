@@ -34,7 +34,60 @@ const translations = {
     goBack: 'العودة للخلف',
     attemptsExhausted: 'تم استنزاف المحاولات. يتم حظرك لمدة دقيقة واحدة.',
     blocked: 'محظور',
-    selectLanguage: 'اختر اللغة'
+    selectLanguage: 'اختر اللغة',
+    
+    // Main App
+    saveWorkouts: 'احفظ تمارينك وتابع تقدمك مع المساعد الذكي المجاني',
+    smartMealPlan: 'مخطط الوجبات الذكي',
+    exerciseManagement: 'إدارة التمارين',
+    calendar: 'التقويم',
+    aiAssistant: 'المساعد الذكي',
+    smartSuggestions: 'اقتراحات ذكية',
+    todayStats: 'إحصائياتك اليوم',
+    exercise: 'تمرين',
+    totalReps: 'تكرار إجمالي',
+    
+    // Meal Planning
+    smartMealPlanner: 'مخطط الوجبات الذكي',
+    planMealsPlan: 'خطط وجباتك وتابع تغذيتك مع المساعد الذكي المجاني',
+    backToMain: 'العودة للقائمة الرئيسية',
+    mealManagement: 'إدارة الوجبات',
+    nutritionTracking: 'متابعة التغذية',
+    nutritionGoals: 'أهداف التغذية',
+    todayNutrition: 'إحصائيات اليوم',
+    calories: 'سعرة حرارية',
+    protein: 'جرام بروتين',
+    carbs: 'جرام كارب',
+    fat: 'جرام دهون',
+    
+    // Exercise Card
+    sets: 'مجموعات',
+    reps: 'تكرار',
+    weight: 'كيلو',
+    addedAt: 'تم الإضافة:',
+    
+    // Meal Card
+    servingSize: 'حجم الحصة:',
+    calories_short: 'سعرات',
+    protein_short: 'بروتين',
+    carbs_short: 'كارب',
+    fat_short: 'دهون',
+    
+    // Categories
+    chest: 'صدر',
+    back: 'ظهر',
+    shoulders: 'كتف',
+    arms: 'ذراع',
+    legs: 'رجل',
+    abs: 'بطن',
+    cardio: 'كارديو',
+    
+    // Meal Categories
+    breakfast: 'إفطار',
+    lunch: 'غداء',
+    dinner: 'عشاء',
+    snack: 'وجبة خفيفة',
+    supplements: 'مكملات'
   },
   es: {
     // Welcome Screen
@@ -60,7 +113,60 @@ const translations = {
     goBack: 'Volver Atrás',
     attemptsExhausted: 'Intentos agotados. Serás bloqueado por un minuto.',
     blocked: 'Bloqueado',
-    selectLanguage: 'Seleccionar Idioma'
+    selectLanguage: 'Seleccionar Idioma',
+    
+    // Main App
+    saveWorkouts: 'Guarda tus entrenamientos y sigue tu progreso con el asistente inteligente gratuito',
+    smartMealPlan: 'Planificador Inteligente de Comidas',
+    exerciseManagement: 'Gestión de Ejercicios',
+    calendar: 'Calendario',
+    aiAssistant: 'Asistente IA',
+    smartSuggestions: 'Sugerencias Inteligentes',
+    todayStats: 'Tus estadísticas de hoy',
+    exercise: 'ejercicio',
+    totalReps: 'repeticiones totales',
+    
+    // Meal Planning
+    smartMealPlanner: 'Planificador Inteligente de Comidas',
+    planMealsPlan: 'Planifica tus comidas y sigue tu nutrición con el asistente inteligente gratuito',
+    backToMain: 'Volver al Menú Principal',
+    mealManagement: 'Gestión de Comidas',
+    nutritionTracking: 'Seguimiento Nutricional',
+    nutritionGoals: 'Objetivos Nutricionales',
+    todayNutrition: 'Estadísticas de Hoy',
+    calories: 'calorías',
+    protein: 'gramos de proteína',
+    carbs: 'gramos de carbohidratos',
+    fat: 'gramos de grasa',
+    
+    // Exercise Card
+    sets: 'series',
+    reps: 'repeticiones',
+    weight: 'kg',
+    addedAt: 'Agregado a las:',
+    
+    // Meal Card
+    servingSize: 'Tamaño de porción:',
+    calories_short: 'calorías',
+    protein_short: 'proteína',
+    carbs_short: 'carbos',
+    fat_short: 'grasa',
+    
+    // Categories
+    chest: 'pecho',
+    back: 'espalda',
+    shoulders: 'hombros',
+    arms: 'brazos',
+    legs: 'piernas',
+    abs: 'abdomen',
+    cardio: 'cardio',
+    
+    // Meal Categories
+    breakfast: 'desayuno',
+    lunch: 'almuerzo',
+    dinner: 'cena',
+    snack: 'merienda',
+    supplements: 'suplementos'
   }
 };
 

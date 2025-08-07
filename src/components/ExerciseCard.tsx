@@ -2,6 +2,7 @@
 import { Trash2, Dumbbell } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { useLanguage } from "@/contexts/LanguageContext";
 import { Exercise } from "@/types/exercise";
 
 interface ExerciseCardProps {
@@ -18,11 +19,20 @@ const getCategoryColor = (category: string) => {
     "رجل": "from-purple-500 to-violet-500",
     "بطن": "from-indigo-500 to-blue-500",
     "كارديو": "from-rose-500 to-pink-500",
+    "pecho": "from-red-500 to-pink-500",
+    "espalda": "from-blue-500 to-cyan-500", 
+    "hombros": "from-yellow-500 to-orange-500",
+    "brazos": "from-green-500 to-emerald-500",
+    "piernas": "from-purple-500 to-violet-500",
+    "abdomen": "from-indigo-500 to-blue-500",
+    "cardio": "from-rose-500 to-pink-500",
   };
   return colors[category as keyof typeof colors] || "from-gray-500 to-slate-500";
 };
 
 const ExerciseCard = ({ exercise, onDelete }: ExerciseCardProps) => {
+  const { t } = useLanguage();
+  
   return (
     <Card className="bg-white/10 backdrop-blur-sm border-white/20 hover:bg-white/15 transition-all duration-200 hover-scale">
       <CardContent className="p-4">
@@ -51,15 +61,15 @@ const ExerciseCard = ({ exercise, onDelete }: ExerciseCardProps) => {
         <div className="grid grid-cols-3 gap-4 mb-3">
           <div className="text-center bg-white/10 rounded-lg p-2">
             <div className="text-xl font-bold text-orange-500">{exercise.sets}</div>
-            <div className="text-xs text-blue-200">مجموعات</div>
+            <div className="text-xs text-blue-200">{t('sets')}</div>
           </div>
           <div className="text-center bg-white/10 rounded-lg p-2">
             <div className="text-xl font-bold text-orange-500">{exercise.reps}</div>
-            <div className="text-xs text-blue-200">تكرار</div>
+            <div className="text-xs text-blue-200">{t('reps')}</div>
           </div>
           <div className="text-center bg-white/10 rounded-lg p-2">
             <div className="text-xl font-bold text-orange-500">{exercise.weight}</div>
-            <div className="text-xs text-blue-200">كيلو</div>
+            <div className="text-xs text-blue-200">{t('weight')}</div>
           </div>
         </div>
 
@@ -70,7 +80,7 @@ const ExerciseCard = ({ exercise, onDelete }: ExerciseCardProps) => {
         )}
 
         <div className="mt-3 text-xs text-blue-300">
-          تم الإضافة: {exercise.createdAt.toLocaleTimeString('ar-SA')}
+          {t('addedAt')} {exercise.createdAt.toLocaleTimeString('ar-SA')}
         </div>
       </CardContent>
     </Card>
